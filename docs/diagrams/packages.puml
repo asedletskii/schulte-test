@@ -1,0 +1,57 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+skinparam packageStyle rectangle
+left to right direction
+package "Слой представления (frontend)" as ui {
+  [pages]
+  [components]
+  [features]
+  [api]
+}
+package "Адаптеры (backend/internal/adapter)" as ad {
+  [http]
+  [postgres]
+  [memory]
+}
+package "Прикладной слой (usecase)" as uc {
+  [AuthService]
+  [SubjectService]
+  [SettingsService]
+  [TestService]
+  [ResultService]
+  [ports]
+}
+package "Предметная область (domain)" as dm {
+  [Subject]
+  [Settings]
+  [TestSession]
+  [Metrics]
+  [Dynamics]
+  [Comparison]
+  [GroupStats]
+  [TableGenerator]
+}
+package "Инфраструктура" as inf {
+  [config]
+  [token]
+  [platform]
+}
+package "cmd/server" as cmd {
+  [main]
+}
+ui ..> ad : HTTP/JSON
+ad ..> uc
+uc ..> dm
+ad ..> dm
+inf ..> uc : реализует порты
+cmd ..> ad
+cmd ..> inf
+cmd ..> uc
+@enduml

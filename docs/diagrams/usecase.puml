@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+actor "Пользователь" as user
+actor "Испытуемый" as subj
+actor "Психолог" as psy
+actor "СУБД PostgreSQL" as db
+rectangle "Таблицы Шульте" {
+  usecase "Войти в систему" as UC1
+  usecase "Пройти тестирование по методике Шульте" as UC2
+  usecase "Просмотреть результаты тестирования" as UC3
+  usecase "Просмотреть динамику результатов" as UC4
+  usecase "Сравнить результаты испытуемых" as UC5
+  usecase "Сравнить результаты в группе" as UC6
+  usecase "Вести данные об испытуемых" as UC7
+  usecase "Настроить параметры тестирования" as UC8
+  usecase "Просмотреть справку" as UC9
+}
+subj --|> user
+psy --|> user
+user -- UC1
+subj -- UC2
+psy -- UC2
+db -- UC2
+subj -- UC3
+psy -- UC3
+subj -- UC4
+psy -- UC4
+psy -- UC5
+psy -- UC6
+psy -- UC7
+db -- UC7
+psy -- UC8
+db -- UC8
+user -- UC9
+@enduml

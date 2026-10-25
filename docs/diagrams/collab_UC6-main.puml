@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+actor "Психолог" as ACTOR
+rectangle ФормаГруппы
+rectangle УправлениеГруппой
+rectangle КарточкаИспытуемого
+rectangle СеансТестирования
+rectangle СводкаПоГруппе
+rectangle ПоказателиВнимания
+ACTOR --> ФормаГруппы : 1: выбратьГруппу(название)
+ФормаГруппы --> УправлениеГруппой : 2: получитьСводку(название)
+УправлениеГруппой --> КарточкаИспытуемого : 3: найтиПоГруппе(название)
+УправлениеГруппой --> СеансТестирования : 4: найтиЗавершённые(идентификатор)
+УправлениеГруппой --> СводкаПоГруппе : 5: построить(участники, тесты)
+СводкаПоГруппе --> ПоказателиВнимания : 6: получитьПоказатели()
+СводкаПоГруппе --> СводкаПоГруппе : 7: рассчитатьСредниеИРейтинг()
+УправлениеГруппой --> ФормаГруппы : 8: сводка
+ФормаГруппы --> ACTOR : 9: показатьРейтингИСредние()
+@enduml

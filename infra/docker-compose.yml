@@ -1,0 +1,54 @@
+# Запуск всей системы: docker compose -f infra/docker-compose.yml --env-file infra/.env up --build
+# Приложение будет доступно на http://localhost:8081
+name: schulte
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-schulte}
+      POSTGRES_USER: ${POSTGRES_USER:-schulte}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-schulte}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-schulte} -d ${POSTGRES_DB:-schulte}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ..
+      dockerfile: infra/backend.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      HTTP_ADDR: ":8080"
+      STORAGE: postgres
+      DATABASE_URL: postgres://${POSTGRES_USER:-schulte}:${POSTGRES_PASSWORD:-schulte}@db:5432/${POSTGRES_DB:-schulte}?sslmode=disable
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+      TOKEN_SECRET: ${TOKEN_SECRET:-change-me-in-production}
+      TOKEN_TTL_HOURS: ${TOKEN_TTL_HOURS:-12}
+      CORS_ORIGIN: ""
+    healthcheck:
+      test: ["CMD", "/app/server", "-healthcheck"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: infra/frontend.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8081}:80"
+
+volumes:
+  pgdata:

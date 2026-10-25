@@ -1,0 +1,49 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаТестирования <<boundary>> {
+
+}
+class УправлениеТестированием <<control>> {
+
+}
+class ПараметрыТестирования <<entity>> {
+  +размерШрифта
+  +цветФона
+  +показыватьТаймер
+  +звукПриОшибке
+}
+class СеансТестирования <<entity>> {
+  +статус
+  +началоТеста
+  +конецТеста
+}
+class ТаблицаШульте <<entity>> {
+  +ячейки
+}
+class РезультатТаблицы <<entity>> {
+  +номер
+  +время
+  +ошибки
+}
+class ПоказателиВнимания <<entity>> {
+  +эр
+  +вр
+  +пу
+  +всегоОшибок
+}
+ФормаТестирования -- УправлениеТестированием
+УправлениеТестированием -- ПараметрыТестирования
+УправлениеТестированием -- СеансТестирования
+СеансТестирования "1" *-- "5" ТаблицаШульте
+СеансТестирования "1" *-- "0..5" РезультатТаблицы
+СеансТестирования "1" *-- "0..1" ПоказателиВнимания
+СеансТестирования "*" -- "1" ПараметрыТестирования
+@enduml

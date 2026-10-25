@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+actor "Психолог" as ACTOR
+rectangle ФормаИспытуемых
+rectangle УправлениеИспытуемыми
+rectangle КарточкаИспытуемого
+ACTOR --> ФормаИспытуемых : 1: ввестиДанные(фио, годРождения, группа)
+ФормаИспытуемых --> УправлениеИспытуемыми : 2: создать(данные)
+УправлениеИспытуемыми --> КарточкаИспытуемого : 3: создать(данные)
+КарточкаИспытуемого --> КарточкаИспытуемого : 4: проверитьДанные()
+КарточкаИспытуемого --> УправлениеИспытуемыми : 5: карточка
+УправлениеИспытуемыми --> ФормаИспытуемых : 6: карточка
+ФормаИспытуемых --> ACTOR : 7: обновитьСписок()
+@enduml

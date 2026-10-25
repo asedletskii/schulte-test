@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+actor "Испытуемый" as ACTOR
+rectangle ФормаТестирования
+rectangle УправлениеТестированием
+rectangle СеансТестирования
+ФормаТестирования --> УправлениеТестированием : 1: завершитьТест(результатыТаблиц)
+УправлениеТестированием --> СеансТестирования : 2: завершить(результатыТаблиц)
+СеансТестирования --> УправлениеТестированием : 3: ошибкаСохранения
+УправлениеТестированием --> ФормаТестирования : 4: ошибка
+ФормаТестирования --> ACTOR : 5: предложитьПовторить()
+@enduml

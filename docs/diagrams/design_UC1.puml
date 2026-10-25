@@ -1,0 +1,81 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class LoginPage <<page>> {
+
+--
++ onAdminLogin()
++ onSubjectLogin()
+}
+class Handler <<adapter>> {
+
+--
++ loginAdmin()
++ loginSubject()
++ startTest()
++ finishTest()
++ getResult()
++ compare()
+}
+class AuthService <<usecase>> {
+
+--
++ LoginAdmin(password)
++ LoginSubject(id)
++ Authenticate(token)
+}
+class Principal <<usecase>> {
++ Role
++ SubjectID
+--
++ IsAdmin()
++ CanAccessSubject(id)
+}
+interface SubjectRepository {
+
+--
++ Create()
++ Update()
++ Delete()
++ GetByID()
++ List(group)
++ Groups()
+}
+interface TokenService {
+
+--
++ Issue(p)
++ Parse(token)
+}
+class TokenHMAC <<adapter>> {
++ secret
++ ttl
+--
++ Issue(p)
++ Parse(token)
+}
+class Subject <<entity>> {
++ ID
++ FullName
++ BirthYear
++ Group
++ Notes
++ CreatedAt
+--
++ Validate(now)
+}
+LoginPage --> Handler
+Handler --> AuthService
+AuthService --> SubjectRepository
+AuthService --> TokenService
+AuthService ..> Principal
+TokenHMAC ..|> TokenService
+SubjectRepository ..> Subject
+@enduml

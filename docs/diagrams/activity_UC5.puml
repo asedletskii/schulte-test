@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+skinparam wrapWidth 210
+skinparam defaultFontSize 12
+|Пользователь|
+|Система|
+|Пользователь|
+start
+|Система|
+:Система отображает список испытуемых.;
+if (Тестирование не выбрано (3а)?) then (да)
+  :Система не выполняет сравнение до тех пор, пока не выбраны оба тестирования.;
+  stop
+else (нет)
+endif
+if (У испытуемого нет тестирований (3б)?) then (да)
+  :Система сообщает, что завершённых тестов нет, и предлагает выбрать другого испытуемого.;
+  stop
+else (нет)
+endif
+|Пользователь|
+:Психолог выбирает испытуемого и тестирование для позиции A, затем — для позиции B.;
+|Система|
+:Система получает оба тестирования и рассчитывает разницу показателей.;
+:Система отображает вывод о том, у кого эффективность работы выше, таблицу показателей и диаграмму времени по таблицам.;
+stop
+@enduml

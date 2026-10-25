@@ -1,0 +1,79 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class DynamicsPage <<page>> {
+
+--
++ load()
+}
+class Handler <<adapter>> {
+
+--
++ loginAdmin()
++ loginSubject()
++ startTest()
++ finishTest()
++ getResult()
++ compare()
+}
+class ResultService <<usecase>> {
+
+--
++ List(p, subjectID)
++ Get(p, id)
++ Delete(p, id)
++ Dynamics(p, subjectID)
++ Compare(p, idA, idB)
++ GroupStats(p, group)
+}
+interface SessionRepository {
+
+--
++ Save()
++ GetByID()
++ ListBySubject()
++ Delete()
+}
+class Dynamics <<entity>> {
++ Points
++ Slope
++ Trend
+--
+
+}
+class TestSession <<entity>> {
++ ID
++ SubjectID
++ Status
++ Tables
++ Settings
++ StartedAt
++ FinishedAt
++ Results
++ Metrics
+--
++ Complete(results, now)
+}
+class Metrics <<entity>> {
++ WorkEfficiency
++ WarmUp
++ Stability
++ FatigueCurve
++ TotalErrors
+--
+
+}
+DynamicsPage --> Handler
+Handler --> ResultService
+ResultService --> SessionRepository
+ResultService ..> Dynamics
+Dynamics "1" o-- "*" Metrics
+SessionRepository ..> TestSession
+@enduml

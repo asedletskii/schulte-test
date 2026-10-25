@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаВхода <<boundary>> {
+
+--
++ выбратьСебя(идентификатор)
++ ввестиПароль(пароль)
+}
+class УправлениеВходом <<control>> {
+
+--
++ войтиИспытуемым(идентификатор)
++ войтиПсихологом(пароль)
++ проверитьПароль(пароль)
+}
+class КарточкаИспытуемого <<entity>> {
++ фио
++ годРождения
++ группа
++ примечание
+--
++ получитьДанные(идентификатор)
+}
+class СеансРаботы <<entity>> {
++ роль
++ токен
++ срокДействия
+--
++ создать(роль, идентификатор)
+}
+ФормаВхода -- УправлениеВходом
+УправлениеВходом -- КарточкаИспытуемого
+УправлениеВходом -- СеансРаботы
+@enduml

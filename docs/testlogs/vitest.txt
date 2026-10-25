@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /home/claude/work/zaicev/frontend
+
+ ✓ src/features/test/runReducer.test.ts (8 tests) 14ms
+ ✓ src/features/test/TestRunner.test.tsx (3 tests) 922ms
+   ✓ TestRunner > проводит пять таблиц и возвращает результаты 879ms
+ ✓ src/utils/format.test.ts (4 tests) 3ms
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  10:32:54
+   Duration  4.15s (transform 132ms, setup 186ms, collect 1.13s, tests 938ms, environment 1.21s, prepare 213ms)
+

@@ -1,0 +1,106 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class TestPage <<page>> {
+
+--
++ onStart()
++ onFinish(results)
+}
+class TestRunner <<component>> {
++ state: RunState
+--
++ onCellClick(n)
++ onNext()
+}
+class Handler <<adapter>> {
+
+--
++ loginAdmin()
++ loginSubject()
++ startTest()
++ finishTest()
++ getResult()
++ compare()
+}
+class TestService <<usecase>> {
+
+--
++ Start(p, subjectID, override)
++ Finish(p, sessionID, results)
+}
+class SettingsService <<usecase>> {
+
+--
++ Get()
++ Update(p, s)
+}
+class TableGenerator <<entity>> {
+
+--
++ Generate()
++ GenerateAll()
+}
+class TestSession <<entity>> {
++ ID
++ SubjectID
++ Status
++ Tables
++ Settings
++ StartedAt
++ FinishedAt
++ Results
++ Metrics
+--
++ Complete(results, now)
+}
+class TableResult <<entity>> {
++ Number
++ Seconds
++ Errors
+--
+
+}
+class Metrics <<entity>> {
++ WorkEfficiency
++ WarmUp
++ Stability
++ FatigueCurve
++ TotalErrors
+--
+
+}
+class Settings <<entity>> {
++ FontSize
++ BackgroundColor
++ ShowTimer
++ SoundOnError
+--
++ Validate()
+}
+interface SessionRepository {
+
+--
++ Save()
++ GetByID()
++ ListBySubject()
++ Delete()
+}
+TestPage *-- TestRunner
+TestPage --> Handler
+Handler --> TestService
+TestService --> SettingsService
+TestService --> TableGenerator
+TestService --> SessionRepository
+TestSession "1" *-- "0..5" TableResult
+TestSession "1" *-- "0..1" Metrics
+TestSession --> Settings
+SessionRepository ..> TestSession
+@enduml

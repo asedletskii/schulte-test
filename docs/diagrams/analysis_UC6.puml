@@ -1,0 +1,48 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаГруппы <<boundary>> {
+
+}
+class УправлениеГруппой <<control>> {
+
+}
+class КарточкаИспытуемого <<entity>> {
+  +фио
+  +годРождения
+  +группа
+  +примечание
+}
+class СеансТестирования <<entity>> {
+  +статус
+  +началоТеста
+  +конецТеста
+}
+class СводкаПоГруппе <<entity>> {
+  +группа
+  +среднийЭР
+  +среднийВР
+  +среднийПУ
+}
+class ПоказателиВнимания <<entity>> {
+  +эр
+  +вр
+  +пу
+  +всегоОшибок
+}
+ФормаГруппы -- УправлениеГруппой
+УправлениеГруппой -- КарточкаИспытуемого
+УправлениеГруппой -- СеансТестирования
+УправлениеГруппой -- СводкаПоГруппе
+СводкаПоГруппе -- ПоказателиВнимания
+КарточкаИспытуемого "1" -- "0..*" СеансТестирования
+СеансТестирования "1" *-- "0..1" ПоказателиВнимания
+СводкаПоГруппе "1" o-- "*" КарточкаИспытуемого
+@enduml

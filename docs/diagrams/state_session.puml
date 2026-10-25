@@ -1,0 +1,15 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+[*] --> in_progress : Start()
+in_progress --> completed : Complete(results)\n[5 таблиц, время>0]
+in_progress --> in_progress : Complete(некорректные данные)\n/ ошибка валидации
+completed --> [*] : Delete()
+in_progress --> [*] : Delete()
+@enduml

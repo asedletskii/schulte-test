@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаНастроек <<boundary>> {
+
+--
++ открытьНастройки()
++ изменитьИСохранить(параметры)
+}
+class УправлениеНастройками <<control>> {
+
+--
++ получитьПараметры()
++ сохранить(параметры)
+}
+class ПараметрыТестирования <<entity>> {
++ размерШрифта
++ цветФона
++ показыватьТаймер
++ звукПриОшибке
+--
++ получить()
++ обновить(параметры)
++ проверитьДиапазоны()
+}
+ФормаНастроек -- УправлениеНастройками
+УправлениеНастройками -- ПараметрыТестирования
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+skinparam wrapWidth 210
+skinparam defaultFontSize 12
+|Пользователь|
+|Система|
+|Пользователь|
+start
+|Система|
+:Система получает завершённые тестирования испытуемого в хронологическом порядке.;
+if (Менее двух тестирований (3а)?) then (да)
+  :Система сообщает, что для оценки динамики необходимо минимум два завершённых тестирования.;
+  :Вариант использования завершается.;
+  stop
+else (нет)
+endif
+:Система рассчитывает наклон линейной регрессии ЭР по номеру теста и определяет тенденцию.;
+:Система отображает вывод о тенденции и графики ЭР, ВР и ПУ.;
+stop
+@enduml

@@ -1,0 +1,65 @@
+	schulte/cmd/server		coverage: 0.0% of statements
+=== RUN   TestFullScenario
+--- PASS: TestFullScenario (0.03s)
+=== RUN   TestInvalidFinishPayload
+--- PASS: TestInvalidFinishPayload (0.00s)
+=== RUN   TestHealthAndCORS
+--- PASS: TestHealthAndCORS (0.00s)
+PASS
+coverage: 73.7% of statements
+ok  	schulte/internal/adapter/http	1.056s	coverage: 73.7% of statements
+	schulte/internal/adapter/repository/memory		coverage: 0.0% of statements
+=== RUN   TestRepositories
+--- PASS: TestRepositories (0.03s)
+PASS
+coverage: 80.2% of statements
+ok  	schulte/internal/adapter/repository/postgres	1.048s	coverage: 80.2% of statements
+=== RUN   TestCalculateMetrics
+--- PASS: TestCalculateMetrics (0.00s)
+=== RUN   TestCalculateMetricsGoodWarmUp
+--- PASS: TestCalculateMetricsGoodWarmUp (0.00s)
+=== RUN   TestCalculateMetricsErrors
+--- PASS: TestCalculateMetricsErrors (0.00s)
+=== RUN   TestTableGenerator
+--- PASS: TestTableGenerator (0.00s)
+=== RUN   TestIsValidTable
+--- PASS: TestIsValidTable (0.00s)
+=== RUN   TestSubjectValidate
+--- PASS: TestSubjectValidate (0.00s)
+=== RUN   TestSettingsValidate
+--- PASS: TestSettingsValidate (0.00s)
+=== RUN   TestSessionComplete
+--- PASS: TestSessionComplete (0.00s)
+=== RUN   TestSessionCompleteValidation
+--- PASS: TestSessionCompleteValidation (0.00s)
+=== RUN   TestDynamics
+--- PASS: TestDynamics (0.00s)
+=== RUN   TestCompare
+--- PASS: TestCompare (0.00s)
+=== RUN   TestGroupStats
+--- PASS: TestGroupStats (0.00s)
+PASS
+coverage: 93.5% of statements
+ok  	schulte/internal/domain	1.017s	coverage: 93.5% of statements
+	schulte/internal/infrastructure/config		coverage: 0.0% of statements
+	schulte/internal/infrastructure/platform		coverage: 0.0% of statements
+=== RUN   TestIssueParse
+--- PASS: TestIssueParse (0.00s)
+PASS
+coverage: 87.5% of statements
+ok  	schulte/internal/infrastructure/token	1.014s	coverage: 87.5% of statements
+=== RUN   TestAuth
+--- PASS: TestAuth (0.00s)
+=== RUN   TestSubjectCRUDAndPermissions
+--- PASS: TestSubjectCRUDAndPermissions (0.00s)
+=== RUN   TestRunTestAndViewResult
+--- PASS: TestRunTestAndViewResult (0.00s)
+=== RUN   TestStartTestWithCustomSettings
+--- PASS: TestStartTestWithCustomSettings (0.00s)
+=== RUN   TestSettings
+--- PASS: TestSettings (0.00s)
+=== RUN   TestDynamicsCompareGroup
+--- PASS: TestDynamicsCompareGroup (0.00s)
+PASS
+coverage: 77.8% of statements
+ok  	schulte/internal/usecase	1.026s	coverage: 77.8% of statements

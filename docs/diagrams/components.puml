@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+component "Web-клиент\n(React SPA)" as web
+component "REST API\n(net/http)" as api
+component "Прикладные сервисы" as svc
+component "Домен" as dom
+component "Хранилище\n(PostgreSQL / память)" as repo
+component "Токены HMAC" as tok
+interface "HTTP/JSON" as i1
+interface "порты хранилищ" as i2
+interface "TokenService" as i3
+web --> i1
+i1 - api
+api --> svc
+svc --> dom
+svc --> i2
+i2 - repo
+svc --> i3
+i3 - tok
+@enduml

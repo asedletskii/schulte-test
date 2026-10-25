@@ -1,0 +1,19 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаСправки <<boundary>> {
+
+}
+class РазделСправки <<entity>> {
+  +заголовок
+  +текст
+}
+ФормаСправки -- РазделСправки
+@enduml

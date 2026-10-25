@@ -1,0 +1,17 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+[*] --> Инструкция
+Инструкция --> Таблица : «Начать тест»
+Таблица --> Таблица : выбор числа (верно/ошибка)
+Таблица --> Пауза : выбрано 25, таблица не последняя
+Пауза --> Таблица : «Следующая таблица»
+Таблица --> Завершение : выбрано 25, таблица последняя
+Завершение --> [*] : результат отправлен
+@enduml

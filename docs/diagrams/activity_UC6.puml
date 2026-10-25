@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+skinparam wrapWidth 210
+skinparam defaultFontSize 12
+|Пользователь|
+|Система|
+|Пользователь|
+start
+|Система|
+if (Группы не созданы (2а)?) then (да)
+  :Система сообщает, что групп пока нет.;
+  :Вариант использования завершается.;
+  stop
+else (нет)
+endif
+|Пользователь|
+:Психолог выбирает группу из списка.;
+|Система|
+:Система получает участников группы и их последние завершённые тестирования.;
+if (В группе нет результатов (4а)?) then (да)
+  :Система отображает участников без показателей и нулевые средние значения.;
+  :Вариант использования завершается.;
+  stop
+else (нет)
+endif
+:Система рассчитывает средние значения ЭР, ВР, ПУ и рейтинг участников по ЭР.;
+:Система отображает сводные показатели, таблицу рейтинга и столбчатую диаграмму ЭР.;
+stop
+@enduml

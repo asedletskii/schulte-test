@@ -1,0 +1,20 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+rectangle "Представление\nReact + TypeScript + MUI" as L1
+rectangle "Адаптеры\nHTTP-обработчики, PostgreSQL, память, токены" as L2
+rectangle "Прикладной слой\nварианты использования, порты" as L3
+rectangle "Предметная область\nсущности и расчёт показателей" as L4
+L1 -down-> L2
+L2 -down-> L3
+L3 -down-> L4
+rectangle "Инфраструктура\nконфигурация, платформа" as L5
+L5 -up-> L3
+@enduml

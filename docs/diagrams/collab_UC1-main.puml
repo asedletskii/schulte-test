@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+actor "Испытуемый" as ACTOR
+rectangle ФормаВхода
+rectangle УправлениеВходом
+rectangle КарточкаИспытуемого
+rectangle СеансРаботы
+ACTOR --> ФормаВхода : 1: выбратьСебя(идентификатор)
+ФормаВхода --> УправлениеВходом : 2: войтиИспытуемым(идентификатор)
+УправлениеВходом --> КарточкаИспытуемого : 3: получитьДанные(идентификатор)
+КарточкаИспытуемого --> УправлениеВходом : 4: карточка
+УправлениеВходом --> СеансРаботы : 5: создать(роль, идентификатор)
+СеансРаботы --> УправлениеВходом : 6: токен
+УправлениеВходом --> ФормаВхода : 7: сеанс
+ФормаВхода --> ACTOR : 8: открытьГлавнуюСтраницу()
+@enduml

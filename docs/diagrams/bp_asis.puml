@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+|Психолог|
+|Испытуемый|
+|Психолог|
+start
+:Подготовить распечатанные таблицы Шульте;
+:Объяснить инструкцию испытуемому;
+|Испытуемый|
+:Находит числа 1–25 по порядку на бумаге;
+|Психолог|
+:Замеряет время секундомером, отмечает ошибки;
+repeat
+:Предъявить следующую таблицу;
+:Записать время и ошибки;
+repeat while (таблиц меньше 5?) is (да) not (нет)
+:Вручную рассчитать ЭР, ВР, ПУ;
+:Записать результат в бумажный протокол;
+:Сравнить с прошлыми протоколами вручную;
+stop
+@enduml

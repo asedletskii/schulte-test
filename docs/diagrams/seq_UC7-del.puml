@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+autonumber
+actor "Психолог" as ACTOR
+boundary ФормаИспытуемых
+control УправлениеИспытуемыми
+entity СеансТестирования
+entity КарточкаИспытуемого
+ACTOR -> ФормаИспытуемых : удалить(идентификатор)
+ФормаИспытуемых -> УправлениеИспытуемыми : удалить(идентификатор)
+УправлениеИспытуемыми -> СеансТестирования : удалитьРезультаты(идентификатор)
+УправлениеИспытуемыми -> КарточкаИспытуемого : удалить(идентификатор)
+УправлениеИспытуемыми --> ФормаИспытуемых : готово
+ФормаИспытуемых --> ACTOR : обновитьСписок()
+@enduml

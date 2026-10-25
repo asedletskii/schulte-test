@@ -1,0 +1,23 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+skinparam wrapWidth 210
+skinparam defaultFontSize 12
+|Пользователь|
+|Система|
+|Пользователь|
+start
+|Система|
+:Система отображает перечень разделов справки, соответствующих роли пользователя.;
+|Пользователь|
+:Пользователь раскрывает интересующий раздел.;
+|Система|
+:Система отображает текст раздела.;
+stop
+@enduml

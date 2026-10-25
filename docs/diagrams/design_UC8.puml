@@ -1,0 +1,50 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class SettingsPage <<page>> {
+
+--
++ save()
+}
+class Handler <<adapter>> {
+
+--
++ loginAdmin()
++ loginSubject()
++ startTest()
++ finishTest()
++ getResult()
++ compare()
+}
+class SettingsService <<usecase>> {
+
+--
++ Get()
++ Update(p, s)
+}
+interface SettingsRepository {
+
+--
++ Get()
++ Save()
+}
+class Settings <<entity>> {
++ FontSize
++ BackgroundColor
++ ShowTimer
++ SoundOnError
+--
++ Validate()
+}
+SettingsPage --> Handler
+Handler --> SettingsService
+SettingsService --> SettingsRepository
+SettingsRepository ..> Settings
+@enduml

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+backend/go.sum.bak
+.work/
+*.pdf
+Psyhotest-setup.zip
+Примеры реализации.zip
+пример отчета.docx
+Лаб. раб. *.docx

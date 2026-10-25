@@ -1,0 +1,26 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+node "Рабочее место пользователя" as pc {
+  artifact "Браузер" as br
+}
+node "Сервер (docker compose)" as srv {
+  node "frontend (nginx)" as fe {
+    artifact "статика React" as st
+  }
+  node "backend (Go)" as be {
+    artifact "schulte-server" as bin
+  }
+  database "PostgreSQL 16" as pg
+}
+br --> fe : HTTP :8081
+fe --> be : /api/* (proxy)
+be --> pg : SQL (pgx)
+@enduml

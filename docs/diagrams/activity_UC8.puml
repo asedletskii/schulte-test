@@ -1,0 +1,29 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+skinparam wrapWidth 210
+skinparam defaultFontSize 12
+|Пользователь|
+|Система|
+|Пользователь|
+start
+|Система|
+:Система отображает текущие параметры тестирования.;
+|Пользователь|
+:Психолог изменяет параметры и нажимает «Сохранить».;
+|Система|
+if (Значение вне допустимого диапазона (4а)?) then (да)
+  :Система сообщает о недопустимом значении (размер шрифта 14–64 px, цвет в формате #RRGGBB) и не сохраняет параметры.;
+  :Психолог исправляет значение.;
+  stop
+else (нет)
+endif
+:Система подтверждает допустимость значений, сохраняет параметры в хранилище и сообщает об успешном сохранении.;
+stop
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+|Психолог|
+|Система|
+|Испытуемый|
+|Психолог|
+start
+:Внести испытуемого в систему;
+|Испытуемый|
+:Войти в систему и открыть тест;
+|Система|
+:Сформировать комплект из 5 таблиц;
+repeat
+|Испытуемый|
+:Выбирает числа 1–25 по порядку;
+|Система|
+:Измеряет время, фиксирует ошибки;
+repeat while (таблиц меньше 5?) is (да) not (нет)
+:Рассчитать ЭР, ВР, ПУ и сохранить результат;
+|Психолог|
+:Просмотреть результат, динамику и сравнение;
+stop
+@enduml

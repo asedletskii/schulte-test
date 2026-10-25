@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+hide circle
+skinparam linetype ortho
+entity subjects {
+  * id : TEXT <<PK>>
+  --
+  full_name : TEXT
+  birth_year : INTEGER
+  group_name : TEXT
+  notes : TEXT
+  created_at : TIMESTAMPTZ
+}
+entity test_sessions {
+  * id : TEXT <<PK>>
+  --
+  subject_id : TEXT <<FK>>
+  status : TEXT
+  tables : JSONB
+  settings : JSONB
+  started_at : TIMESTAMPTZ
+  finished_at : TIMESTAMPTZ
+  results : JSONB
+  metrics : JSONB
+}
+entity settings {
+  * id : SMALLINT <<PK>> (=1)
+  --
+  font_size : INTEGER
+  background_color : TEXT
+  show_timer : BOOLEAN
+  sound_on_error : BOOLEAN
+}
+subjects ||--o{ test_sessions : "ON DELETE CASCADE"
+@enduml

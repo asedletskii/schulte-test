@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+autonumber
+actor "Пользователь" as ACTOR
+boundary ФормаСправки
+entity РазделСправки
+ACTOR -> ФормаСправки : открытьСправку()
+ФормаСправки -> РазделСправки : получитьРазделы(роль)
+РазделСправки --> ФормаСправки : разделы
+ФормаСправки --> ACTOR : показатьПеречень()
+ACTOR -> ФормаСправки : выбратьРаздел(заголовок)
+ФормаСправки -> РазделСправки : получитьТекст(заголовок)
+РазделСправки --> ФормаСправки : текст
+ФормаСправки --> ACTOR : показатьТекст()
+@enduml

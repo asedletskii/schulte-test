@@ -1,0 +1,46 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаДинамики <<boundary>> {
+
+}
+class УправлениеДинамикой <<control>> {
+
+}
+class КарточкаИспытуемого <<entity>> {
+  +фио
+  +годРождения
+  +группа
+  +примечание
+}
+class СеансТестирования <<entity>> {
+  +статус
+  +началоТеста
+  +конецТеста
+}
+class ДинамикаРезультатов <<entity>> {
+  +точки
+  +наклон
+  +тенденция
+}
+class ПоказателиВнимания <<entity>> {
+  +эр
+  +вр
+  +пу
+  +всегоОшибок
+}
+ФормаДинамики -- УправлениеДинамикой
+УправлениеДинамикой -- КарточкаИспытуемого
+УправлениеДинамикой -- СеансТестирования
+УправлениеДинамикой -- ДинамикаРезультатов
+КарточкаИспытуемого "1" -- "0..*" СеансТестирования
+СеансТестирования "1" *-- "0..1" ПоказателиВнимания
+ДинамикаРезультатов "1" o-- "*" ПоказателиВнимания
+@enduml

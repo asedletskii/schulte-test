@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class ФормаИспытуемых <<boundary>> {
+
+--
++ ввестиДанные(фио, годРождения, группа)
++ удалить(идентификатор)
+}
+class УправлениеИспытуемыми <<control>> {
+
+--
++ создать(данные)
++ удалить(идентификатор)
+}
+class КарточкаИспытуемого <<entity>> {
++ фио
++ годРождения
++ группа
++ примечание
+--
++ создать(данные)
++ проверитьДанные()
++ удалить(идентификатор)
+}
+class СеансТестирования <<entity>> {
++ статус
++ началоТеста
++ конецТеста
+--
++ удалитьРезультаты(идентификатор)
+}
+ФормаИспытуемых -- УправлениеИспытуемыми
+УправлениеИспытуемыми -- КарточкаИспытуемого
+УправлениеИспытуемыми -- СеансТестирования
+КарточкаИспытуемого "1" -- "0..*" СеансТестирования
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Liberation Serif"
+skinparam defaultFontSize 13
+skinparam dpi 130
+skinparam ArrowFontSize 12
+skinparam roundcorner 6
+skinparam wrapWidth 320
+left to right direction
+class SubjectsPage <<page>> {
+
+--
++ create()
++ update()
++ remove()
+}
+class Handler <<adapter>> {
+
+--
++ loginAdmin()
++ loginSubject()
++ startTest()
++ finishTest()
++ getResult()
++ compare()
+}
+class SubjectService <<usecase>> {
+
+--
++ Create(p, in)
++ Update(p, id, in)
++ Delete(p, id)
++ List(p, group)
++ ListPublic()
+}
+class Principal <<usecase>> {
++ Role
++ SubjectID
+--
++ IsAdmin()
++ CanAccessSubject(id)
+}
+interface SubjectRepository {
+
+--
++ Create()
++ Update()
++ Delete()
++ GetByID()
++ List(group)
++ Groups()
+}
+class Subject <<entity>> {
++ ID
++ FullName
++ BirthYear
++ Group
++ Notes
++ CreatedAt
+--
++ Validate(now)
+}
+SubjectsPage --> Handler
+Handler --> SubjectService
+SubjectService --> SubjectRepository
+SubjectService ..> Principal
+SubjectRepository ..> Subject
+@enduml
