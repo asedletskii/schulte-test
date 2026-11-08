@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// DynamicsPoint — точка динамики результатов испытуемого.
+// точка динамики результатов испытуемого
 type DynamicsPoint struct {
 	SessionID      string
 	Date           time.Time
@@ -16,7 +16,7 @@ type DynamicsPoint struct {
 	Errors         int
 }
 
-// Trend — направление изменения показателя.
+// направление изменения показателя
 type Trend string
 
 const (
@@ -26,18 +26,17 @@ const (
 	TrendUnknown   Trend = "unknown" // недостаточно данных (менее двух тестов)
 )
 
-// trendThreshold — минимальное изменение ЭР за один тест (в секундах),
-// начиная с которого тренд считается значимым.
+// минимальное изменение ЭР за один тест (в секундах), начиная с которого тренд считается значимым
 const trendThreshold = 0.05
 
-// Dynamics — отчёт об изменении характеристик внимания во времени.
+// отчёт об изменении характеристик внимания во времени
 type Dynamics struct {
 	Points []DynamicsPoint
 	Slope  float64 // наклон линейной регрессии ЭР по номеру теста, с/тест
 	Trend  Trend
 }
 
-// BuildDynamics строит динамику по завершённым сеансам (в хронологическом порядке).
+// строит динамику по завершённым сеансам (в хронологическом порядке)
 func BuildDynamics(sessions []*TestSession) Dynamics {
 	done := completed(sessions)
 	sort.Slice(done, func(i, j int) bool { return done[i].FinishedAt.Before(*done[j].FinishedAt) })
@@ -72,7 +71,7 @@ func BuildDynamics(sessions []*TestSession) Dynamics {
 	return d
 }
 
-// linearSlope — наклон МНК-прямой y = a + b·x при x = 0, 1, 2, …
+// наклон МНК-прямой y = a + b·x
 func linearSlope(ys []float64) float64 {
 	n := float64(len(ys))
 	var sx, sy, sxy, sxx float64
@@ -90,18 +89,17 @@ func linearSlope(ys []float64) float64 {
 	return (n*sxy - sx*sy) / den
 }
 
-// Comparison — сравнение двух сеансов тестирования.
+// сравнение двух сеансов тестирования
 type Comparison struct {
 	A, B           *TestSession
 	DiffEfficiency float64 // ЭР(B) − ЭР(A), с; отрицательное — B быстрее
 	DiffWarmUp     float64
 	DiffStability  float64
 	DiffErrors     int
-	// Better — «A», «B» или «equal»: у кого ниже ЭР (меньше времени на таблицу).
-	Better string
+	Better         string
 }
 
-// Compare сравнивает два завершённых сеанса.
+// сравнивает два завершённых сеанса
 func Compare(a, b *TestSession) (Comparison, error) {
 	if a == nil || b == nil || a.Metrics == nil || b.Metrics == nil {
 		return Comparison{}, Validationf("для сравнения нужны два завершённых тестирования")
@@ -124,7 +122,7 @@ func Compare(a, b *TestSession) (Comparison, error) {
 	return c, nil
 }
 
-// GroupMember — итог испытуемого в групповом сравнении (по последнему тесту).
+// итог испытуемого в групповом сравнении (по последнему тесту)
 type GroupMember struct {
 	Subject Subject
 	Tests   int
@@ -132,7 +130,7 @@ type GroupMember struct {
 	Rank    int      // место по ЭР (1 — лучший); 0 — нет данных
 }
 
-// GroupStats — сводка по группе испытуемых.
+// сводка по группе испытуемых
 type GroupStats struct {
 	Group           string
 	Members         []GroupMember
@@ -142,7 +140,7 @@ type GroupStats struct {
 	ParticipantsCnt int // число участников, имеющих результаты
 }
 
-// BuildGroupStats формирует сводку: средние значения по последним тестам и рейтинг.
+// формирует сводку: средние значения по последним тестам и рейтинг
 func BuildGroupStats(group string, subjects []Subject, sessionsBySubject map[string][]*TestSession) GroupStats {
 	gs := GroupStats{Group: group}
 	for _, sub := range subjects {
@@ -154,7 +152,7 @@ func BuildGroupStats(group string, subjects []Subject, sessionsBySubject map[str
 		}
 		gs.Members = append(gs.Members, m)
 	}
-	// рейтинг по возрастанию ЭР
+
 	idx := make([]int, 0, len(gs.Members))
 	for i, m := range gs.Members {
 		if m.Latest != nil {

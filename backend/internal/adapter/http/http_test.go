@@ -76,7 +76,7 @@ func fiveResults(sec float64) m {
 }
 
 // Полный сценарий: вход психолога → создание испытуемого → вход испытуемого →
-// тестирование → результаты → динамика → сравнение.
+// тестирование → результаты → динамика → сравнение
 func TestFullScenario(t *testing.T) {
 	srv := newServer(t)
 	admin := &client{t: t, base: srv.URL}
@@ -105,13 +105,11 @@ func TestFullScenario(t *testing.T) {
 		t.Errorf("неизвестное поле должно отклоняться: %d", code)
 	}
 
-	// публичный список для экрана входа испытуемого
 	var pub []m
 	if code := (&client{t: t, base: srv.URL}).do("GET", "/api/public/subjects", nil, &pub); code != 200 || len(pub) != 1 {
 		t.Fatalf("публичный список: %d %v", code, pub)
 	}
 
-	// режим тестируемого
 	me := &client{t: t, base: srv.URL}
 	var ss struct{ Token string }
 	me.do("POST", "/api/auth/subject", m{"subjectId": sub.ID}, &ss)
@@ -128,7 +126,7 @@ func TestFullScenario(t *testing.T) {
 		t.Fatalf("настройки: %d %v", code, settings)
 	}
 
-	for i, sec := range []float64{50, 40} { // два теста для динамики
+	for i, sec := range []float64{50, 40} {
 		var test struct {
 			ID     string
 			Tables [][]int

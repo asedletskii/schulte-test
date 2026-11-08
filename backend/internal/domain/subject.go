@@ -6,7 +6,7 @@ import (
 	"unicode/utf8"
 )
 
-// Subject — испытуемый, проходящий тестирование.
+// испытуемый, проходящий тестирование
 type Subject struct {
 	ID        string
 	FullName  string
@@ -16,7 +16,7 @@ type Subject struct {
 	CreatedAt time.Time
 }
 
-// Validate проверяет инварианты сущности.
+// проверяет инварианты сущности
 func (s *Subject) Validate(now time.Time) error {
 	s.FullName = strings.TrimSpace(s.FullName)
 	s.Group = strings.TrimSpace(s.Group)

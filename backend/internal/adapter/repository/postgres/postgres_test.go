@@ -11,7 +11,6 @@ import (
 	"schulte/internal/domain"
 )
 
-// Интеграционный тест: выполняется только при заданной TEST_DATABASE_URL.
 func connect(t *testing.T) *postgres.Store {
 	t.Helper()
 	url := os.Getenv("TEST_DATABASE_URL")
@@ -64,7 +63,6 @@ func TestRepositories(t *testing.T) {
 		t.Errorf("Groups: %v", g)
 	}
 
-	// сеанс: сохранение, завершение, чтение
 	tables := domain.NewTableGenerator(1, 2).GenerateAll()
 	ses, err := domain.NewTestSession("t1", "s1", tables, domain.DefaultSettings(), now)
 	if err != nil {
@@ -96,7 +94,6 @@ func TestRepositories(t *testing.T) {
 		t.Errorf("ListBySubject: %d", len(l))
 	}
 
-	// настройки
 	if _, err := settings.Get(ctx); !errors.Is(err, domain.ErrNotFound) {
 		t.Errorf("пустые настройки должны давать ErrNotFound: %v", err)
 	}
@@ -104,14 +101,13 @@ func TestRepositories(t *testing.T) {
 	if err := settings.Save(ctx, want); err != nil {
 		t.Fatal(err)
 	}
-	if err := settings.Save(ctx, want); err != nil { // upsert
+	if err := settings.Save(ctx, want); err != nil {
 		t.Fatal(err)
 	}
 	if got, _ := settings.Get(ctx); got != want {
 		t.Errorf("настройки: %+v", got)
 	}
 
-	// каскадное удаление
 	if err := subjects.Delete(ctx, "s1"); err != nil {
 		t.Fatal(err)
 	}

@@ -2,7 +2,7 @@ package domain
 
 import "time"
 
-// SessionStatus — состояние сеанса тестирования.
+// состояние сеанса тестирования
 type SessionStatus string
 
 const (
@@ -10,18 +10,17 @@ const (
 	StatusCompleted  SessionStatus = "completed"
 )
 
-// MaxTableSeconds — верхняя граница времени на одну таблицу (защита от
-// заведомо некорректных данных клиента).
+// верхняя граница времени на одну таблицу (защита от заведомо некорректных данных клиента)
 const MaxTableSeconds = 3600.0
 
-// TableResult — итог прохождения одной таблицы.
+// итог прохождения одной таблицы
 type TableResult struct {
-	Number  int     // порядковый номер таблицы 1…5
+	Number  int     // порядковый номер таблицы
 	Seconds float64 // затраченное время, с
 	Errors  int     // число ошибочных выборов
 }
 
-// TestSession — один сеанс тестирования испытуемого (5 таблиц).
+// один сеанс тестирования испытуемого
 type TestSession struct {
 	ID         string
 	SubjectID  string
@@ -34,7 +33,7 @@ type TestSession struct {
 	Metrics    *Metrics
 }
 
-// NewTestSession создаёт сеанс в состоянии «выполняется».
+// создаёт сеанс в состоянии «выполняется»
 func NewTestSession(id, subjectID string, tables [][]int, s Settings, now time.Time) (*TestSession, error) {
 	if len(tables) != TablesCount {
 		return nil, Validationf("ожидается %d таблиц", TablesCount)
@@ -57,7 +56,7 @@ func NewTestSession(id, subjectID string, tables [][]int, s Settings, now time.T
 	}, nil
 }
 
-// Complete фиксирует результаты и рассчитывает показатели внимания.
+// фиксирует результаты и рассчитывает показатели внимания
 func (t *TestSession) Complete(results []TableResult, now time.Time) error {
 	if t.Status == StatusCompleted {
 		return ErrConflict

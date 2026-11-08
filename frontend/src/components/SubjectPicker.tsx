@@ -9,7 +9,6 @@ interface Props {
   label?: string;
 }
 
-/** Выбор испытуемого из списка (режим психолога). */
 export function SubjectPicker({ value, onChange, label = 'Испытуемый' }: Props) {
   const { data, error, loading } = useAsync<Subject[]>(() => api.listSubjects(), []);
   if (error) return <Alert severity="error">{error}</Alert>;

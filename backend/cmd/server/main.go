@@ -1,5 +1,3 @@
-// Команда server — точка входа (composition root): собирает слои приложения
-// и запускает HTTP-сервер.
 package main
 
 import (
@@ -23,7 +21,6 @@ import (
 )
 
 func main() {
-	// Режим проверки работоспособности для HEALTHCHECK в Docker: `server -healthcheck`.
 	if len(os.Args) > 1 && os.Args[1] == "-healthcheck" {
 		os.Exit(healthcheck())
 	}
@@ -43,7 +40,6 @@ func run(log *slog.Logger) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	// Адаптеры хранилищ (внешний слой) выбираются конфигурацией.
 	var (
 		subjects usecase.SubjectRepository
 		sessions usecase.SessionRepository
@@ -63,7 +59,6 @@ func run(log *slog.Logger) error {
 		subjects, sessions, settings = st.Subjects(), st.Sessions(), st.Settings()
 	}
 
-	// Прикладной слой.
 	ids, clock := platform.UUIDGenerator{}, platform.SystemClock{}
 	tokens := token.New(cfg.TokenSecret, cfg.TokenTTL)
 	settingsSvc := usecase.NewSettingsService(settings)
@@ -103,7 +98,6 @@ func run(log *slog.Logger) error {
 	return nil
 }
 
-// healthcheck запрашивает /api/health у локального экземпляра сервера.
 func healthcheck() int {
 	addr := os.Getenv("HTTP_ADDR")
 	if addr == "" {

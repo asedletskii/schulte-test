@@ -5,7 +5,7 @@ import (
 	nethttp "net/http"
 )
 
-// NewRouter собирает маршруты REST API и подключает сквозные обработчики.
+// собирает маршруты REST API и подключает сквозные обработчики
 func NewRouter(h *Handler, log *slog.Logger, corsOrigin string) nethttp.Handler {
 	mux := nethttp.NewServeMux()
 	a := h.authenticated
@@ -14,13 +14,13 @@ func NewRouter(h *Handler, log *slog.Logger, corsOrigin string) nethttp.Handler 
 		h.writeJSON(w, nethttp.StatusOK, map[string]string{"status": "ok"})
 	})
 
-	// Вход в систему (без токена).
+	// Вход в систему (без токена)
 	mux.HandleFunc("POST /api/auth/admin", h.loginAdmin)
 	mux.HandleFunc("POST /api/auth/subject", h.loginSubject)
 	mux.HandleFunc("GET /api/public/subjects", h.publicSubjects)
 	mux.HandleFunc("GET /api/auth/me", a(h.me))
 
-	// Испытуемые.
+	// Испытуемые
 	mux.HandleFunc("GET /api/subjects", a(h.listSubjects))
 	mux.HandleFunc("POST /api/subjects", a(h.createSubject))
 	mux.HandleFunc("GET /api/subjects/{id}", a(h.getSubject))
@@ -29,15 +29,15 @@ func NewRouter(h *Handler, log *slog.Logger, corsOrigin string) nethttp.Handler 
 	mux.HandleFunc("GET /api/subjects/{id}/results", a(h.listResults))
 	mux.HandleFunc("GET /api/subjects/{id}/dynamics", a(h.dynamics))
 
-	// Группы.
+	// Группы
 	mux.HandleFunc("GET /api/groups", a(h.listGroups))
 	mux.HandleFunc("GET /api/groups/{name}/stats", a(h.groupStats))
 
-	// Настройки.
+	// Настройки
 	mux.HandleFunc("GET /api/settings", a(h.getSettings))
 	mux.HandleFunc("PUT /api/settings", a(h.updateSettings))
 
-	// Тестирование и результаты.
+	// Тестирование и результаты
 	mux.HandleFunc("POST /api/tests", a(h.startTest))
 	mux.HandleFunc("POST /api/tests/{id}/finish", a(h.finishTest))
 	mux.HandleFunc("GET /api/results/{id}", a(h.getResult))

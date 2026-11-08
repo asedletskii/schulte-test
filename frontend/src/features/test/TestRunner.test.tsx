@@ -15,7 +15,7 @@ describe('TestRunner', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Начать тест' }));
     for (let t = 1; t <= 5; t++) {
       expect(screen.getByText(`Таблица ${t} из 5`)).toBeInTheDocument();
-      if (t === 1) fireEvent.click(screen.getByLabelText('число 7')); // одна ошибка
+      if (t === 1) fireEvent.click(screen.getByLabelText('число 7'));
       for (let v = 1; v <= 25; v++) fireEvent.click(screen.getByLabelText(`число ${v}`));
       if (t < 5) fireEvent.click(screen.getByRole('button', { name: new RegExp(`Таблица ${t + 1} — начать`) }));
     }

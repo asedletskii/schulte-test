@@ -1,5 +1,3 @@
-// Пакет http — адаптер доставки (REST API на net/http). Преобразует
-// HTTP-запросы в вызовы прикладных сервисов и обратно.
 package http
 
 import (
@@ -86,7 +84,7 @@ type testDTO struct {
 	ID         string           `json:"id"`
 	SubjectID  string           `json:"subjectId"`
 	Status     string           `json:"status"`
-	Tables     [][]int          `json:"tables,omitempty"` // только для незавершённого теста
+	Tables     [][]int          `json:"tables,omitempty"`
 	Settings   settingsDTO      `json:"settings"`
 	StartedAt  time.Time        `json:"startedAt"`
 	FinishedAt *time.Time       `json:"finishedAt,omitempty"`

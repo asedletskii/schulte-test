@@ -1,5 +1,3 @@
-// Типы данных REST API (соответствуют DTO backend).
-
 export type Role = 'admin' | 'subject';
 
 export interface AuthSession {

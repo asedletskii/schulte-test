@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-# Сборка frontend и раздача статики через nginx (контекст — корень репозитория).
 FROM node:22-alpine AS build
 WORKDIR /src
 COPY frontend/package.json frontend/package-lock.json ./

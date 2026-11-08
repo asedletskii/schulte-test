@@ -1,6 +1,5 @@
 import { LineChart } from '@mui/x-charts/LineChart';
 
-/** Кривая утомляемости: время прохождения каждой из пяти таблиц. */
 export function FatigueChart({ curve, average }: { curve: number[]; average?: number }) {
   const x = curve.map((_, i) => i + 1);
   const series = [{ curve: 'linear' as const, data: curve, label: 'Время на таблицу, с', color: '#1565c0', valueFormatter: (v: number | null) => (v == null ? '' : `${v.toFixed(2)} с`) }];

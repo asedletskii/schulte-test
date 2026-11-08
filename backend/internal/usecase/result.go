@@ -6,19 +6,17 @@ import (
 	"schulte/internal/domain"
 )
 
-// ResultService — варианты использования «Просмотреть результаты»,
+// варианты использования «Просмотреть результаты»,
 // «Просмотреть динамику результатов» и «Сравнить результаты».
 type ResultService struct {
 	subjects SubjectRepository
 	sessions SessionRepository
 }
 
-// NewResultService создаёт сервис работы с результатами.
 func NewResultService(subjects SubjectRepository, sessions SessionRepository) *ResultService {
 	return &ResultService{subjects: subjects, sessions: sessions}
 }
 
-// List возвращает завершённые тестирования испытуемого (новые — первыми).
 func (r *ResultService) List(ctx context.Context, p Principal, subjectID string) ([]*domain.TestSession, error) {
 	if !p.CanAccessSubject(subjectID) {
 		return nil, domain.ErrForbidden
@@ -36,7 +34,6 @@ func (r *ResultService) List(ctx context.Context, p Principal, subjectID string)
 	return out, nil
 }
 
-// Get возвращает один результат.
 func (r *ResultService) Get(ctx context.Context, p Principal, id string) (*domain.TestSession, error) {
 	s, err := r.sessions.GetByID(ctx, id)
 	if err != nil {
@@ -48,7 +45,6 @@ func (r *ResultService) Get(ctx context.Context, p Principal, id string) (*domai
 	return s, nil
 }
 
-// Delete удаляет результат (только администратор).
 func (r *ResultService) Delete(ctx context.Context, p Principal, id string) error {
 	if !p.IsAdmin() {
 		return domain.ErrForbidden
@@ -56,7 +52,6 @@ func (r *ResultService) Delete(ctx context.Context, p Principal, id string) erro
 	return r.sessions.Delete(ctx, id)
 }
 
-// Dynamics формирует отчёт о динамике результатов испытуемого.
 func (r *ResultService) Dynamics(ctx context.Context, p Principal, subjectID string) (domain.Dynamics, error) {
 	if !p.CanAccessSubject(subjectID) {
 		return domain.Dynamics{}, domain.ErrForbidden
@@ -68,7 +63,6 @@ func (r *ResultService) Dynamics(ctx context.Context, p Principal, subjectID str
 	return domain.BuildDynamics(all), nil
 }
 
-// Compare сравнивает два тестирования (только администратор): одного или разных испытуемых.
 func (r *ResultService) Compare(ctx context.Context, p Principal, idA, idB string) (domain.Comparison, error) {
 	if !p.IsAdmin() {
 		return domain.Comparison{}, domain.ErrForbidden
@@ -84,7 +78,6 @@ func (r *ResultService) Compare(ctx context.Context, p Principal, idA, idB strin
 	return domain.Compare(a, b)
 }
 
-// GroupStats формирует сводку по группе испытуемых (только администратор).
 func (r *ResultService) GroupStats(ctx context.Context, p Principal, group string) (domain.GroupStats, error) {
 	if !p.IsAdmin() {
 		return domain.GroupStats{}, domain.ErrForbidden

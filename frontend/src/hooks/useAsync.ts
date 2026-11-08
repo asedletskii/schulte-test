@@ -7,7 +7,6 @@ interface AsyncState<T> {
   reload: () => void;
 }
 
-/** Загружает данные при монтировании и при смене зависимостей. */
 export function useAsync<T>(fn: () => Promise<T>, deps: unknown[]): AsyncState<T> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);

@@ -1,4 +1,3 @@
-// Пакет postgres — реализация портов хранилищ на PostgreSQL (драйвер pgx).
 package postgres
 
 import (
@@ -19,10 +18,10 @@ import (
 //go:embed schema.sql
 var schemaSQL string
 
-// Store — подключение к БД; создаёт репозитории.
+// подключение к БД; создаёт репозитории
 type Store struct{ pool *pgxpool.Pool }
 
-// Connect открывает пул соединений и применяет схему БД.
+// открывает пул соединений и применяет схему БД
 func Connect(ctx context.Context, url string) (*Store, error) {
 	pool, err := pgxpool.New(ctx, url)
 	if err != nil {
@@ -39,10 +38,9 @@ func Connect(ctx context.Context, url string) (*Store, error) {
 	return &Store{pool: pool}, nil
 }
 
-// Close закрывает пул соединений.
+// закрывает пул соединений.
 func (s *Store) Close() { s.pool.Close() }
 
-// Pool — доступ к пулу (используется в интеграционных тестах).
 func (s *Store) Pool() *pgxpool.Pool { return s.pool }
 
 func (s *Store) Subjects() *SubjectRepo  { return &SubjectRepo{s.pool} }
@@ -95,7 +93,7 @@ func (r *SubjectRepo) Update(ctx context.Context, s *domain.Subject) error {
 }
 
 func (r *SubjectRepo) Delete(ctx context.Context, id string) error {
-	tag, err := r.pool.Exec(ctx, `DELETE FROM subjects WHERE id=$1`, id) // результаты удаляются каскадно
+	tag, err := r.pool.Exec(ctx, `DELETE FROM subjects WHERE id=$1`, id)
 	if err != nil {
 		return err
 	}
@@ -150,7 +148,6 @@ type SessionRepo struct{ pool *pgxpool.Pool }
 
 const sessionCols = `id, subject_id, status, tables, settings, started_at, finished_at, results, metrics`
 
-// Save выполняет upsert сеанса.
 func (r *SessionRepo) Save(ctx context.Context, s *domain.TestSession) error {
 	tables, _ := json.Marshal(s.Tables)
 	settings, _ := json.Marshal(settingsDTO{s.Settings.FontSize, s.Settings.BackgroundColor, s.Settings.ShowTimer, s.Settings.SoundOnError})

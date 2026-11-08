@@ -10,7 +10,7 @@ import (
 	"schulte/internal/usecase"
 )
 
-// Handler содержит прикладные сервисы, вызываемые из HTTP-обработчиков.
+//содержит прикладные сервисы, вызываемые из HTTP-обработчиков
 type Handler struct {
 	auth     *usecase.AuthService
 	subjects *usecase.SubjectService
@@ -20,7 +20,7 @@ type Handler struct {
 	log      *slog.Logger
 }
 
-// Deps — зависимости HTTP-слоя.
+// зависимости HTTP-слоя
 type Deps struct {
 	Auth     *usecase.AuthService
 	Subjects *usecase.SubjectService
@@ -30,12 +30,9 @@ type Deps struct {
 	Log      *slog.Logger
 }
 
-// NewHandler создаёт обработчик.
 func NewHandler(d Deps) *Handler {
 	return &Handler{auth: d.Auth, subjects: d.Subjects, tests: d.Tests, results: d.Results, settings: d.Settings, log: d.Log}
 }
-
-// ---- вспомогательные функции ----
 
 func (h *Handler) writeJSON(w nethttp.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -50,7 +47,6 @@ type errorBody struct {
 	Code  string `json:"code"`
 }
 
-// writeError сопоставляет доменные ошибки с HTTP-статусами.
 func (h *Handler) writeError(w nethttp.ResponseWriter, err error) {
 	status, code := nethttp.StatusInternalServerError, "internal"
 	msg := "внутренняя ошибка сервера"

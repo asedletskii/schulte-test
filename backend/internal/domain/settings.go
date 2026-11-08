@@ -6,21 +6,21 @@ import (
 
 var hexColor = regexp.MustCompile(`^#[0-9a-fA-F]{6}$`)
 
-// Границы допустимого размера шрифта в ячейках таблицы (в пикселях).
+// размера шрифта в ячейках таблицы (в пикселях)
 const (
 	MinFontSize = 14
 	MaxFontSize = 64
 )
 
-// Settings — визуальные параметры тестовых заданий (требование ТЗ 1.3).
+// визуальные параметры тестовых заданий
 type Settings struct {
-	FontSize        int    // размер шрифта чисел в таблице, px
-	BackgroundColor string // цвет фона таблицы, #RRGGBB
-	ShowTimer       bool   // показывать секундомер во время теста
-	SoundOnError    bool   // звуковой сигнал при ошибочном выборе
+	FontSize        int
+	BackgroundColor string
+	ShowTimer       bool
+	SoundOnError    bool
 }
 
-// DefaultSettings возвращает стандартные параметры тестирования.
+// возвращает стандартные параметры тестирования
 func DefaultSettings() Settings {
 	return Settings{
 		FontSize:        28,
@@ -30,7 +30,7 @@ func DefaultSettings() Settings {
 	}
 }
 
-// Validate проверяет корректность параметров.
+// проверяет корректность параметров
 func (s Settings) Validate() error {
 	if s.FontSize < MinFontSize || s.FontSize > MaxFontSize {
 		return Validationf("размер шрифта должен быть в диапазоне %d–%d px", MinFontSize, MaxFontSize)

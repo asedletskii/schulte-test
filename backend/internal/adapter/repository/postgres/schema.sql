@@ -1,4 +1,3 @@
--- Схема БД приложения «Тестирование внимания по методике Шульте».
 CREATE TABLE IF NOT EXISTS subjects (
     id          TEXT PRIMARY KEY,
     full_name   TEXT        NOT NULL,
@@ -11,7 +10,7 @@ CREATE TABLE IF NOT EXISTS subjects (
 CREATE INDEX IF NOT EXISTS idx_subjects_group ON subjects (group_name);
 
 CREATE TABLE IF NOT EXISTS settings (
-    id               SMALLINT PRIMARY KEY CHECK (id = 1), -- единственная строка
+    id               SMALLINT PRIMARY KEY CHECK (id = 1),
     font_size        INTEGER NOT NULL,
     background_color TEXT    NOT NULL,
     show_timer       BOOLEAN NOT NULL,

@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    setUnauthorizedHandler(() => apply(null)); // токен истёк — возвращаемся на экран входа
+    setUnauthorizedHandler(() => apply(null));
     return () => setUnauthorizedHandler(null);
   }, [apply]);
 

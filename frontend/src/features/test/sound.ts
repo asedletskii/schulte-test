@@ -1,6 +1,5 @@
 let ctx: AudioContext | null = null;
 
-/** Короткий звуковой сигнал ошибки (Web Audio API); при недоступности звука ничего не делает. */
 export function beepError() {
   try {
     const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
@@ -15,6 +14,5 @@ export function beepError() {
     osc.start();
     osc.stop(ctx.currentTime + 0.15);
   } catch {
-    /* звук не критичен */
   }
 }

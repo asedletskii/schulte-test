@@ -1,4 +1,3 @@
-// Пакет config загружает настройки приложения из переменных окружения.
 package config
 
 import (
@@ -8,7 +7,6 @@ import (
 	"time"
 )
 
-// Config — параметры запуска сервера.
 type Config struct {
 	HTTPAddr      string
 	Storage       string // "postgres" или "memory"
@@ -19,7 +17,6 @@ type Config struct {
 	CORSOrigin    string
 }
 
-// Load читает конфигурацию и проверяет обязательные значения.
 func Load() (Config, error) {
 	c := Config{
 		HTTPAddr:      env("HTTP_ADDR", ":8080"),

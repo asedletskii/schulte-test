@@ -11,13 +11,11 @@ interface Props {
   onFinish: (results: TableResult[]) => void;
 }
 
-/** Прохождение теста: пять таблиц 5×5, числа нужно находить по возрастанию от 1 до 25. */
 export function TestRunner({ tables, settings, onFinish }: Props) {
   const [state, dispatch] = useReducer(runReducer, initialRunState);
   const [elapsed, setElapsed] = useState(0);
   const reported = useRef(false);
 
-  // секундомер (только отображение; зачёт времени выполняется по меткам performance.now())
   useEffect(() => {
     if (state.phase !== 'running' || state.startedAt === null) return;
     const started = state.startedAt;

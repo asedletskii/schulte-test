@@ -3,7 +3,6 @@ import type {
   TableResult, TestSession,
 } from './types';
 
-/** Ошибка API с HTTP-статусом и текстом, пригодным для показа пользователю. */
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);

@@ -6,28 +6,23 @@ import (
 )
 
 const (
-	// GridSize — сторона таблицы Шульте.
-	GridSize = 5
-	// CellsCount — количество чисел в одной таблице (1…25).
-	CellsCount = GridSize * GridSize
-	// TablesCount — количество таблиц в одном тестировании по методике.
-	TablesCount = 5
+	GridSize = 5 // сторона таблицы Шульте
+	CellsCount = GridSize * GridSize // количество чисел в одной таблице
+	TablesCount = 5	// количество таблиц в одном тестировании по методике
 )
 
-// TableGenerator формирует таблицы Шульте со случайным расположением чисел.
+// формирует таблицы Шульте со случайным расположением чисел
 type TableGenerator struct {
-	mu  sync.Mutex // rand.Rand не потокобезопасен, а сервер обслуживает запросы параллельно
+	mu  sync.Mutex
 	rnd *rand.Rand
 }
 
-// NewTableGenerator создаёт генератор. Передав фиксированный seed, можно
-// получить воспроизводимые таблицы (используется в тестах).
+// создаёт генератор. Передав фиксированный seed, чтобы получить воспроизводимые таблицы (в тестах)
 func NewTableGenerator(seed1, seed2 uint64) *TableGenerator {
 	return &TableGenerator{rnd: rand.New(rand.NewPCG(seed1, seed2))}
 }
 
-// Generate возвращает случайную перестановку чисел от 1 до 25.
-// Индекс элемента — позиция ячейки слева направо, сверху вниз.
+// возвращает случайную перестановку чисел от 1 до 25
 func (g *TableGenerator) Generate() []int {
 	cells := make([]int, CellsCount)
 	for i := range cells {
@@ -39,7 +34,7 @@ func (g *TableGenerator) Generate() []int {
 	return cells
 }
 
-// GenerateAll возвращает полный комплект из пяти таблиц.
+// возвращает полный комплект из пяти таблиц
 func (g *TableGenerator) GenerateAll() [][]int {
 	tables := make([][]int, TablesCount)
 	for i := range tables {
@@ -48,7 +43,6 @@ func (g *TableGenerator) GenerateAll() [][]int {
 	return tables
 }
 
-// IsValidTable проверяет, что таблица — перестановка чисел 1…25.
 func IsValidTable(cells []int) bool {
 	if len(cells) != CellsCount {
 		return false

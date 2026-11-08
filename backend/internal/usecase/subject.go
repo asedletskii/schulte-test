@@ -6,7 +6,7 @@ import (
 	"schulte/internal/domain"
 )
 
-// SubjectInput — данные для создания/изменения испытуемого.
+// данные для создания/изменения испытуемого.
 type SubjectInput struct {
 	FullName  string
 	BirthYear int
@@ -14,19 +14,17 @@ type SubjectInput struct {
 	Notes     string
 }
 
-// SubjectService — вариант использования «Вести данные об испытуемых».
+// вариант использования «Вести данные об испытуемых».
 type SubjectService struct {
 	subjects SubjectRepository
 	ids      IDGenerator
 	clock    Clock
 }
 
-// NewSubjectService создаёт сервис управления испытуемыми.
 func NewSubjectService(subjects SubjectRepository, ids IDGenerator, clock Clock) *SubjectService {
 	return &SubjectService{subjects: subjects, ids: ids, clock: clock}
 }
 
-// Create регистрирует нового испытуемого (только администратор).
 func (s *SubjectService) Create(ctx context.Context, p Principal, in SubjectInput) (*domain.Subject, error) {
 	if !p.IsAdmin() {
 		return nil, domain.ErrForbidden
@@ -45,7 +43,6 @@ func (s *SubjectService) Create(ctx context.Context, p Principal, in SubjectInpu
 	return sub, nil
 }
 
-// Update изменяет данные испытуемого (только администратор).
 func (s *SubjectService) Update(ctx context.Context, p Principal, id string, in SubjectInput) (*domain.Subject, error) {
 	if !p.IsAdmin() {
 		return nil, domain.ErrForbidden
@@ -64,15 +61,13 @@ func (s *SubjectService) Update(ctx context.Context, p Principal, id string, in 
 	return sub, nil
 }
 
-// Delete удаляет испытуемого вместе с его результатами (только администратор).
 func (s *SubjectService) Delete(ctx context.Context, p Principal, id string) error {
 	if !p.IsAdmin() {
 		return domain.ErrForbidden
 	}
-	return s.subjects.Delete(ctx, id) // каскадное удаление сеансов обеспечивает хранилище
+	return s.subjects.Delete(ctx, id)
 }
 
-// Get возвращает карточку испытуемого с учётом прав доступа.
 func (s *SubjectService) Get(ctx context.Context, p Principal, id string) (*domain.Subject, error) {
 	if !p.CanAccessSubject(id) {
 		return nil, domain.ErrForbidden
@@ -80,7 +75,6 @@ func (s *SubjectService) Get(ctx context.Context, p Principal, id string) (*doma
 	return s.subjects.GetByID(ctx, id)
 }
 
-// List возвращает список испытуемых (только администратор).
 func (s *SubjectService) List(ctx context.Context, p Principal, group string) ([]domain.Subject, error) {
 	if !p.IsAdmin() {
 		return nil, domain.ErrForbidden
@@ -88,7 +82,6 @@ func (s *SubjectService) List(ctx context.Context, p Principal, group string) ([
 	return s.subjects.List(ctx, group)
 }
 
-// Groups возвращает названия групп (только администратор).
 func (s *SubjectService) Groups(ctx context.Context, p Principal) ([]string, error) {
 	if !p.IsAdmin() {
 		return nil, domain.ErrForbidden
@@ -96,8 +89,6 @@ func (s *SubjectService) Groups(ctx context.Context, p Principal) ([]string, err
 	return s.subjects.Groups(ctx)
 }
 
-// ListPublic возвращает краткий список для экрана выбора пользователя
-// при входе в режиме тестируемого (аутентификация не требуется).
 func (s *SubjectService) ListPublic(ctx context.Context) ([]domain.Subject, error) {
 	return s.subjects.List(ctx, "")
 }

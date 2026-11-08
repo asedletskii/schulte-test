@@ -1,5 +1,3 @@
-// Пакет memory — реализация портов хранилищ в оперативной памяти.
-// Используется в модульных тестах и при запуске без СУБД (STORAGE=memory).
 package memory
 
 import (
@@ -10,7 +8,7 @@ import (
 	"schulte/internal/domain"
 )
 
-// Store содержит все три репозитория и общую блокировку.
+// содержит все три репозитория и общую блокировку
 type Store struct {
 	mu       sync.RWMutex
 	subjects map[string]domain.Subject
@@ -18,7 +16,7 @@ type Store struct {
 	settings *domain.Settings
 }
 
-// NewStore создаёт пустое хранилище.
+// создаёт пустое хранилище.
 func NewStore() *Store {
 	return &Store{subjects: map[string]domain.Subject{}, sessions: map[string]domain.TestSession{}}
 }
@@ -53,7 +51,7 @@ func (r *SubjectRepo) Delete(_ context.Context, id string) error {
 		return domain.ErrNotFound
 	}
 	delete(r.s.subjects, id)
-	for sid, ses := range r.s.sessions { // каскадное удаление результатов
+	for sid, ses := range r.s.sessions {
 		if ses.SubjectID == id {
 			delete(r.s.sessions, sid)
 		}
@@ -152,7 +150,6 @@ func (r *SessionRepo) Delete(_ context.Context, id string) error {
 	return nil
 }
 
-// clone выполняет глубокое копирование, чтобы вызывающий код не менял данные хранилища.
 func clone(s domain.TestSession) domain.TestSession {
 	c := s
 	c.Tables = make([][]int, len(s.Tables))

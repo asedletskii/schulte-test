@@ -20,7 +20,6 @@ function Tile(props: { title: string; value: string; hint: string; level?: 'good
   );
 }
 
-/** Карточки показателей ЭР, ВР, ПУ и числа ошибок. */
 export function MetricCards({ m }: { m: Metrics }) {
   return (
     <Grid container spacing={2}>

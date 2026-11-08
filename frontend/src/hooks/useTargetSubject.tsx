@@ -3,10 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { SubjectPicker } from '../components/SubjectPicker';
 
-/**
- * Определяет, чьи данные показывать: испытуемый видит только свои,
- * психолог выбирает испытуемого из списка (или приходит со страницы «Испытуемые»).
- */
 export function useTargetSubject(): { subjectId: string | null; picker: ReactNode } {
   const { role, subjectId } = useAuth();
   const location = useLocation();

@@ -2,7 +2,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// В режиме разработки запросы /api проксируются на Go-сервер.
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -16,7 +15,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // раздельные чанки ускоряют загрузку и кэширование
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
           mui: ['@mui/material', '@mui/icons-material', '@emotion/react', '@emotion/styled'],

@@ -1,5 +1,3 @@
-// Пакет token реализует выпуск и проверку подписанных токенов доступа
-// (HMAC-SHA256) без внешних зависимостей.
 package token
 
 import (
@@ -20,24 +18,21 @@ type claims struct {
 	Exp  int64        `json:"exp"`
 }
 
-// Service — реализация usecase.TokenService.
 type Service struct {
 	secret []byte
 	ttl    time.Duration
 	now    func() time.Time
 }
 
-// New создаёт сервис токенов с заданным секретом и временем жизни.
 func New(secret string, ttl time.Duration) *Service {
 	return &Service{secret: []byte(secret), ttl: ttl, now: time.Now}
 }
 
-// WithClock подменяет источник времени (для тестов).
 func (s *Service) WithClock(now func() time.Time) *Service { s.now = now; return s }
 
 var enc = base64.RawURLEncoding
 
-// Issue выпускает токен вида base64url(payload).base64url(hmac).
+// выпускает токен
 func (s *Service) Issue(p usecase.Principal) (string, time.Time, error) {
 	exp := s.now().Add(s.ttl)
 	payload, err := json.Marshal(claims{Role: p.Role, Sub: p.SubjectID, Exp: exp.Unix()})
@@ -48,7 +43,7 @@ func (s *Service) Issue(p usecase.Principal) (string, time.Time, error) {
 	return body + "." + s.sign(body), exp, nil
 }
 
-// Parse проверяет подпись и срок действия.
+// проверяет подпись и срок действия
 func (s *Service) Parse(tok string) (usecase.Principal, error) {
 	body, sig, ok := strings.Cut(tok, ".")
 	if !ok || !hmac.Equal([]byte(sig), []byte(s.sign(body))) {

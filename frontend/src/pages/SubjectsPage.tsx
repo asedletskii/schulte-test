@@ -22,7 +22,6 @@ function SubjectDialog(props: { open: boolean; initial: Subject | null; groups: 
   const [error, setError] = useState<string | null>(null);
   const [prevKey, setPrevKey] = useState('');
 
-  // сброс формы при каждом открытии диалога
   const key = `${open}-${initial?.id ?? 'new'}`;
   if (key !== prevKey) {
     setPrevKey(key);

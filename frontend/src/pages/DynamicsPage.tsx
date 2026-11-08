@@ -12,7 +12,6 @@ export function DynamicsPage() {
   const dyn = useAsync<Dynamics | null>(() => (subjectId ? api.dynamics(subjectId) : Promise.resolve(null)), [subjectId]);
   const d = dyn.data;
 
-  // подпись точки: номер теста и дата
   const labels = (d?.points ?? []).map(
     (p, i) => `№${i + 1} · ${new Date(p.date).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' })}`,
   );

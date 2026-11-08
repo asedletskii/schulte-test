@@ -1,16 +1,13 @@
 import type { Level, Trend } from '../api/types';
 
-/** Секунды → «12,34 с». */
 export function formatSeconds(v: number, digits = 2): string {
   return `${v.toFixed(digits).replace('.', ',')} с`;
 }
 
-/** Число с запятой в качестве десятичного разделителя. */
 export function formatNumber(v: number, digits = 2): string {
   return v.toFixed(digits).replace('.', ',');
 }
 
-/** Секундомер: 83.4 → «01:23.4». */
 export function formatStopwatch(ms: number): string {
   const total = Math.max(0, ms) / 1000;
   const m = Math.floor(total / 60);

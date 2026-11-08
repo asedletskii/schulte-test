@@ -3,7 +3,6 @@ import { CELLS, initialRunState, runReducer, TABLES, type RunState } from './run
 
 const pick = (s: RunState, value: number, now: number) => runReducer(s, { type: 'pick', value, now });
 
-/** Проходит текущую таблицу без ошибок за `ms` миллисекунд, начиная с момента `t0`. */
 function playTable(s: RunState, t0: number, ms: number): RunState {
   s = runReducer(s, { type: 'start', now: t0 });
   for (let v = 1; v <= CELLS; v++) s = pick(s, v, t0 + (ms * v) / CELLS);
@@ -36,7 +35,7 @@ describe('runReducer', () => {
 
   it('после числа 25 таблица завершается и фиксируется время и ошибки', () => {
     let s = runReducer(initialRunState, { type: 'start', now: 0 });
-    s = pick(s, 9, 10); // ошибка
+    s = pick(s, 9, 10);
     for (let v = 1; v <= CELLS; v++) s = pick(s, v, 1000 * v);
     expect(s.phase).toBe('between');
     expect(s.results).toHaveLength(1);

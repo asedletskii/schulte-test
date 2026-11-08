@@ -1,19 +1,15 @@
 import type { TableResult } from '../../api/types';
 
-/**
- * Состояние прохождения теста из пяти таблиц.
- * Редьюсер чистый (время передаётся в действиях), поэтому легко тестируется.
- */
 export type Phase = 'intro' | 'running' | 'between' | 'finished';
 
 export interface RunState {
   phase: Phase;
-  tableIndex: number; // 0…4
-  next: number; // следующее искомое число 1…26
+  tableIndex: number;
+  next: number;
   errors: number;
-  startedAt: number | null; // момент показа текущей таблицы, мс
+  startedAt: number | null;
   results: TableResult[];
-  lastWrong: number | null; // последнее ошибочно выбранное число (для подсветки)
+  lastWrong: number | null;
 }
 
 export const TABLES = 5;
@@ -30,8 +26,8 @@ export const initialRunState: RunState = {
 };
 
 export type RunAction =
-  | { type: 'start'; now: number } // начать/продолжить: показать текущую таблицу
-  | { type: 'pick'; value: number; now: number } // выбор числа в таблице
+  | { type: 'start'; now: number }
+  | { type: 'pick'; value: number; now: number }
   | { type: 'reset' };
 
 export function runReducer(state: RunState, action: RunAction): RunState {
@@ -48,7 +44,6 @@ export function runReducer(state: RunState, action: RunAction): RunState {
       if (state.next < CELLS) {
         return { ...state, next: state.next + 1, lastWrong: null };
       }
-      // последнее число найдено — таблица пройдена
       const result: TableResult = {
         number: state.tableIndex + 1,
         seconds: Math.max(0.001, (action.now - state.startedAt) / 1000),
